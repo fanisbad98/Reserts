@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "483236257595",
+    "project_id": "quizzy-dbfb2",
+    "storage_bucket": "quizzy-dbfb2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:483236257595:android:74e388689d24f4939a211e",
+        "android_client_info": {
+          "package_name": "gr.emity.fl_quiz_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcOXIEzQHAUEgSYAjfe594SKmazxYB8q4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      },
+      "admob_app_id": "ca-app-pub-6058247618636615~5850674938"
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:483236257595:android:4cc28dd6af24e8859a211e",
+        "android_client_info": {
+          "package_name": "gr.emity.reserts"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcOXIEzQHAUEgSYAjfe594SKmazxYB8q4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
