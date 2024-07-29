@@ -1,0 +1,129 @@
+<% if (user) { %>
+    <%- include('../partials/header.ejs') %>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Users</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                                <li class="breadcrumb-item active">Users</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <table id="example1" class="table table-bordered table-striped projects">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Mobile</th>
+                                                <th>Email</th>
+                                                <!-- <th>Subscribed</th> -->
+                                                <th>Points</th>
+                                                <th>Active Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% for( let i=0; i < data.length; i++ ) { %>
+                                                <tr>
+                                                    <td>
+                                                        <%= i+1 %>
+                                                    </td>
+                                                    <td>
+                                                        <div class="user-block">
+                                                            <img src="<%= data[i].profilePic %>" alt="profile_pic"
+                                                                class="img-circle mr-1">
+                                                            <%= data[i].name %>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <%= data[i].mobile %>
+                                                    </td>
+                                                    <td>
+                                                        <%= data[i].email %>
+                                                    </td>
+                                                    <!-- <td>
+                                                    <span class="<%= data[i].isSubscribed ? 'badge badge-success' : 'badge badge-danger' %>"><%= data[i].isSubscribed ? "Yes" : "No" %> </span>
+                                                </td> -->
+                                                    <td>
+                                                        <%= data[i].totalPoints %>
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="<%= data[i].userStatus ? 'badge badge-success' : 'badge badge-danger' %>">
+                                                            <%= data[i].userStatus ? "Active" : "Deactive" %>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm"
+                                                            onclick="changeUserStatus('<%= data[i]._id%>')">Active/Deactive</button>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Mobile</th>
+                                                <th>Email</th>
+                                                <!-- <th>Subscribed</th> -->
+                                                <th>Points</th>
+                                                <th>Active Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </section>
+            <!-- /.content -->
+        </div>
+
+        <script type="text/javascript">
+            function changeUserStatus(id) {
+                $.ajax({
+                    url: `/userStatus/${id}`,
+                    type: 'PATCH',
+                    data: null,
+                    contentType: 'application/json',
+                    success: function (data) {
+                        toastr.success(data.msg)
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 2000)
+                    },
+                    error: function (err) {
+                        $('#modalAddQuestion').modal('hide');
+                        toastr.error(err.responseJSON.err_msg)
+                    }
+                })
+            }
+        </script>
+        <%- include('../partials/footer.ejs') %>
+            <% } else { %>
+                <%- include('../auth/login.ejs') %>
+                    <% } %>

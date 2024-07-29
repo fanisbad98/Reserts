@@ -1,0 +1,74 @@
+<% if (user) { %>
+    <%- include('../partials/header.ejs') %> 
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Home Screen Banner</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                            <li class="breadcrumb-item active">Home Screen Banner</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+    
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <form id="formUploadBanner" action="/bannerImage" method="POST" enctype="multipart/form-data">
+                                                <label for="exampleInputFile">Banner Image</label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" name="bannerImage" id="bannerImage" accept="image/*">
+                                                        <label class="custom-file-label" for="bannerImage">Choose file</label>
+                                                    </div>
+                                                    <div class="input-group-append">
+                                                        <!-- <span class="" > -->
+                                                            <button type="submit" class="input-group-text">Upload</button>
+                                                        <!-- </span> -->
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="offset-2 col-4">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <label for="previewImage"> Current Image</label>
+                                            </div>
+                                            <div class="col-12">
+                                                <img width="300" src="<%= banner %>" alt="Banner Image" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <%- include('../partials/footer.ejs') %> 
+<% } else { %>
+    <%- include('../auth/login.ejs') %>
+<% } %>

@@ -1,0 +1,126 @@
+<% if (user) { %>
+     <%- include('../partials/header.ejs') %> 
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Push Notification</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalSendNotification">
+                                <i class="fas fa-paper-plane">&nbsp;</i>
+                                Send Notification
+                            </button>
+                        </ol>
+                    </div>
+                    <!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+    
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+                <div class="col-12">
+                    <div class="card"> 
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Title</th>
+                                        <th>Content</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for( let index = 0; index < data.length; index++ ) { %>
+                                        <tr>
+                                            <td><%= index + 1 %></td>
+                                            <td><%= data[index].title %></td>
+                                            <td><%= data[index].content %></td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <div class="modal fade" id="modalSendNotification" aria-modal="true" role="dialog"
+        style="padding-right: 17px; display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Send Notification</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <form id="formSendNotification" action="/pushNotification" method="POST">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="notificationTitle">Notification Title</label>
+                            <input type="text" class="form-control" id="notificationTitle" name="notificationTitle"
+                                placeholder="Enter Notification Title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="notificationSubTitle">Notification Subtitle</label>
+                            <input type="text" class="form-control" id="notificationSubTitle" name="notificationSubTitle"
+                                placeholder="Enter Notification Sub title">
+                        </div>
+                        <div class="form-group">
+                            <label for="notificationContent">Notification Content</label>
+                            <input type="text" class="form-control" id="notificationContent" name="notificationContent"
+                                placeholder="Enter Notification Content">
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label>Notification Image</label>
+                                    <div class="input-group custom-file-button">
+                                        <label class="input-group-text" for="notificationImage">Choose Image</label>
+                                        <input type="file" class="form-control" id="notificationImage" accept="image/*" name="notificationImage"
+                                            onchange="handleChooseIcon()" style="display: none;">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <img class="img-fluid mt-3" id="selectedIcon" src="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.content-wrapper -->
+    <script type="text/javascript">
+        function handleChooseIcon(){
+            let reader = new FileReader();
+                    reader.readAsDataURL(document.getElementById('notificationImage').files[0]);
+                    reader.onload = function (e) {
+                        document.getElementById('selectedIcon').src = e.target.result;
+                    }
+        }
+    </script>
+    <%- include('../partials/footer.ejs') %> 
+<% } else { %>
+    <%- include('../auth/login.ejs') %>
+<% } %>

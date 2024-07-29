@@ -1,0 +1,360 @@
+<% if (user) { %>
+    <%- include('../partials/header.ejs') %>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">App Settings</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                                <li class="breadcrumb-item active">App Settings</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form id="formAppSetting" action="/updateAppSetting" method="POST"
+                                        enctype="multipart/form-data">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="androidAppLink">App Link (Android)</label>
+                                                    <input type="string" class="form-control" name="androidAppLink"
+                                                        id="androidAppLink" placeholder="Enter App Link of Android"
+                                                        value="<%= setting.androidAppLink %>" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="iOSAppLink">App Link (iOS)</label>
+                                                    <input type="string" class="form-control" name="iOSAppLink"
+                                                        id="iOSAppLink" value="<%= setting.iOSAppLink %>"
+                                                        placeholder="Enter App Link of iOS" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="androidAppVersionCode">App Version Code
+                                                        (Android)</label>
+                                                    <input type="number" class="form-control"
+                                                        name="androidAppVersionCode" id="androidAppVersionCode"
+                                                        placeholder="Enter App Version Code for Android"
+                                                        value="<%= setting.androidAppVersionCode %>" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="iOSAppVersionCode">App Version Code (iOS)</label>
+                                                    <input type="number" class="form-control" name="iOSAppVersionCode"
+                                                        id="iOSAppVersionCode" value="<%= setting.iOSAppVersionCode %>"
+                                                        placeholder="Enter App Version Code for iOS" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-switch custom-switch-on-success">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            name="androidUpdatePopup" id="androidUpdatePopup"
+                                                            <%=setting.androidUpdatePopup ? 'checked' : 'unchecked' %>
+                                                        />
+                                                        <label class="custom-control-label"
+                                                            for="androidUpdatePopup">Update App Popup (Android)</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-switch custom-switch-on-success">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            name="iOSUpdatePopup" id="iOSUpdatePopup"
+                                                            <%=setting.iOSUpdatePopup ? 'checked' : 'unchecked' %> />
+                                                        <label class="custom-control-label" for="iOSUpdatePopup">Update
+                                                            App Popup (iOS)</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-switch custom-switch-on-success">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            name="androidForceUpdate" id="androidForceUpdate"
+                                                            <%=setting.androidForceUpdate ? 'checked' : 'unchecked' %>
+                                                        />
+                                                        <label class="custom-control-label"
+                                                            for="androidForceUpdate">Force Update App (Android)</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-switch custom-switch-on-success">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            name="iOSForceUpdate" id="iOSForceUpdate"
+                                                            <%=setting.iOSForceUpdate ? 'checked' : 'unchecked' %> />
+                                                        <label class="custom-control-label" for="iOSForceUpdate">Force
+                                                            Update App (iOS)</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-switch custom-switch-on-success">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            name="isMinusGrading" id="isMinusGrading"
+                                                            <%=setting.isMinusGrading ? 'checked' : 'unchecked' %> />
+                                                        <label class="custom-control-label" for="isMinusGrading">Minus
+                                                            Grading</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-switch custom-switch-on-success">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            name="hint5050" id="hint5050" <%=setting.hint5050
+                                                            ? 'checked' : 'unchecked' %> />
+                                                        <label class="custom-control-label" for="hint5050">Hint
+                                                            (50-50)</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <label>User Placeholder Image</label>
+                                                        <div class="input-group custom-file-button">
+                                                            <label class="input-group-text" for="userPlaceholder">Change
+                                                                Image</label>
+                                                            <input type="file" class="form-control" accept="image/*"
+                                                                id="userPlaceholder" name="userPlaceholder"
+                                                                onchange="handlePickImage()" style="display: none;">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <img class="img-circle mt-3" id="currentImage"
+                                                            src="<%= setting.userPlaceholder %>"
+                                                            style="height: 200px;" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="hintPoints">Hint Point</label>
+                                                    <input type="string" class="form-control" name="hintPoints"
+                                                        id="hintPoints"
+                                                        placeholder="Enter Point that will be deducted after use hint"
+                                                        value="<%= setting.hintPoints %>" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exitQuizMessage">Exit Quiz Message</label>
+                                                    <input type="string" class="form-control" name="exitQuizMessage"
+                                                        id="exitQuizMessage" placeholder="Enter Message for Exit Quiz"
+                                                        value="<%= setting.exitQuizMessage %>" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="minusGradPoints">Minus Grad Points</label>
+                                                    <input type="number" class="form-control" name="minusGradPoints"
+                                                        id="minusGradPoints"
+                                                        placeholder="Enter points that will be decreased on False Answer"
+                                                        value="<%= setting.minusGradPoints %>" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="referralCodePrefix">Referral Code Prefix</label>
+                                                    <input type="string" class="form-control" name="referralCodePrefix"
+                                                        id="referralCodePrefix" placeholder="Enter Referral code prefix"
+                                                        value="<%= setting.referralCodePrefix %>" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="welcomePoints">Welcome Reward Point<span
+                                                            class="fas fa-info-circle ml-1" data-toggle="tooltip"
+                                                            data-placement="top"
+                                                            title="If Referral code enter in register screen then user get this welcome point"></span></label>
+                                                    <input type="string" class="form-control" name="welcomePoints"
+                                                        id="welcomePoints" placeholder="Enter Welcome Reward Points"
+                                                        value="<%= setting.welcomePoints %>" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="referralPoints">Referral Reward Point <span
+                                                            class="fas fa-info-circle ml-1" data-toggle="tooltip"
+                                                            data-placement="top"
+                                                            title="If Referral code enter in register screen by referred user then referance user get this Referral point"></span></label>
+                                                    <input type="string" class="form-control" name="referralPoints"
+                                                        id="referralPoints" placeholder="Enter Referral reward Points"
+                                                        value="<%= setting.referralPoints %>" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="currencySymbol">Currency Symbol</label>
+                                                    <input type="text" class="form-control" name="currencySymbol"
+                                                        id="currencySymbol" placeholder="Add Currency Symbol"
+                                                        value="<%= setting.currencySymbol %>" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="conversionRate">Conversion Rate <small>(<i>per 1000
+                                                                point</i>)</small></label>
+                                                    <input type="number" class="form-control" name="conversionRate"
+                                                        id="conversionRate"
+                                                        placeholder="Add Conversion Rate per 1000 points"
+                                                        value="<%= setting.conversionRate %>" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="minWithdrawAmount">Min. Withdrawal Amount</label>
+                                                    <input type="number" class="form-control" name="minWithdrawAmount"
+                                                        id="minWithdrawAmount"
+                                                        placeholder="Enter Minimum Withdrawal Amount"
+                                                        value="<%= setting.minWithdrawAmount %>" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="referalText">Referal Share Text</label>
+                                                    <input type="text" class="form-control" name="referalText"
+                                                        id="referalText" placeholder="Enter Refereal Share text here"
+                                                        value="<%= setting.referalText %>" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="pointsPerQuestion">Points Earn per Question</label>
+                                                    <input type="number" class="form-control" name="pointsPerQuestion"
+                                                        id="pointsPerQuestion"
+                                                        placeholder="Add Points to Earn per Question"
+                                                        value="<%= setting.pointsPerQuestion %>" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="timePerQuestion">Time per Question <small>(<i>in
+                                                                Seconds</i>)</small></label>
+                                                    <input type="number" class="form-control" name="timePerQuestion"
+                                                        id="timePerQuestion" placeholder="Add per question time"
+                                                        value="<%= setting.timePerQuestion %>" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="oneSignalAppID">OneSignal AppID</label>
+                                                    <input type="string" class="form-control" name="oneSignalAppID"
+                                                        id="oneSignalAppID" placeholder="Enter OneSignal AppID"
+                                                        value="<%= setting.oneSignalAppID %>" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="oneSignalSecretKey">OneSignal Secret Key</label>
+                                                    <input type="string" class="form-control" name="oneSignalSecretKey"
+                                                        id="oneSignalSecretKey" placeholder="Enter OneSignal Secret Key"
+                                                        value="<%= setting.oneSignalSecretKey%>" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="ruleOfQuiz">Rule of Quiz</label>
+                                                    <textarea class="textarea-app" name="ruleOfQuiz"
+                                                        id="ruleOfQuiz"><%= setting.ruleOfQuiz %></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="updateAppMessage">Update App Message</label>
+                                                    <textarea class="textarea-app" name="updateAppMessage"
+                                                        id="updateAppMessage"><%= setting.updateAppMessage %></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="privacyPolicy">Privacy Policy</label>
+                                                    <textarea class="textarea-app" name="privacyPolicy"
+                                                        id="privacyPolicy"><%= setting.privacyPolicy %></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="termsOfUse">Terms of Use</label>
+                                                    <textarea class="textarea-app" id="termsOfUse"
+                                                        name="termsOfUse"><%= setting.termsOfUse %></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="submit" class="btn btn-lg btn-primary">Update</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </section>
+            <!-- /.content -->
+        </div>
+
+        <script type="text/javascript">
+            function handlePickImage() {
+                let reader = new FileReader();
+                reader.readAsDataURL(document.getElementById('userPlaceholder').files[0]);
+                reader.onload = function (e) {
+                    document.getElementById('currentImage').src = e.target.result;
+                }
+            }
+        </script>
+        <!-- /.content-wrapper -->
+        <%- include('../partials/footer.ejs') %>
+            <% } else { %>
+                <%- include('../auth/login.ejs') %>
+                    <% } %>

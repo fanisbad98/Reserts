@@ -1,0 +1,403 @@
+<!-- /.content-wrapper -->
+<footer class="main-footer">
+    <strong>Copyright &copy; <%= app.copyrightYear %> <a href="<%= app.appHost %>">
+                <%= app.appName %>
+            </a>.</strong>
+    All rights reserved.
+</footer>
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../public/plugins/jquery/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="../public/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="../public/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../public/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="../public/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../public/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../public/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../public/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../public/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../public/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="../public/plugins/jszip/jszip.min.js"></script>
+<script src="../public/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../public/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="../public/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="../public/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="../public/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- ChartJS -->
+<script src="../public/plugins/chart.js/Chart.min.js"></script>
+<!-- Sparkline -->
+<script src="../public/plugins/sparklines/sparkline.js"></script>
+<!-- JQVMap -->
+<script src="../public/plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="../public/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="../public/plugins/jquery-knob/jquery.knob.min.js"></script>
+<!-- daterangepicker -->
+<script src="../public/plugins/moment/moment.min.js"></script>
+<script src="../public/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="../public/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Bootstrap Switch -->
+<script src="../public/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="../public/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<script src="../public/plugins/toastr/toastr.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../public/dist/js/adminlte.js"></script>
+<script>
+
+    $('#btnLogout').click((e) => {
+        $.ajax({
+            type: "GET",
+            url: '/admin/logout',
+            dataType: 'json',
+            success: function (data) {
+                window.location.reload()
+            },
+            error: function (data) {
+                window.location.reload()
+            }
+
+        })
+    })
+
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": true,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "2000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
+    $(function () {
+        bsCustomFileInput.init();
+    });
+    $("input[data-bootstrap-switch]").each(function () {
+        $(this).bootstrapSwitch('state', $(this).prop(''));
+    })
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": true,
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    });
+
+    $('form#formChangePassword').submit(function (e) {
+        e.preventDefault()
+        var form = this;
+        var formData = new FormData(form)
+        var pass = {}
+        for (const [key, value] of formData) {
+            pass[key] = value
+        }
+        if (pass.newPassword != pass.reEnterPassword) {
+            toastr.error("Password Should be matched!!!")
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                contentType: 'application/json',
+                data: JSON.stringify(pass),
+                success: function (data) {
+                    form.reset()
+                    $('#modalChangePassword').modal('hide');
+                    toastr.success(data.msg)
+                },
+                error: function (err) {
+                    form.reset()
+                    $('#modalChangePassword').modal('hide');
+                    toastr.error(err.responseJSON.err_msg || 'Something went wrong')
+                }
+            })
+        }
+    })
+
+    $('form#formSendNotification').submit(function (e) {
+        e.preventDefault()
+        var form = this;
+        var formData = new FormData(form)
+        var image = $('#notificationImage').val()
+        if (image != '') {
+            formData.append('notificationImage', image)
+        } else {
+            formData.delete('notificationImage')
+        }
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            data: formData,
+            success: function (data) {
+                form.reset()
+                $('#modalSendNotification').modal('hide');
+                toastr.success(data.msg)
+            },
+            error: function (err) {
+                form.reset()
+                $("#modalSendNotification").modal('hide')
+                toastr.error(err.responseJSON.err_msg || "Something went wrong")
+            }
+        })
+    })
+
+    $('form#formAddCategory').submit(function (e) {
+        e.preventDefault()
+        var form = this;
+        var formData = new FormData(form)
+        var image = $('#categoryImage').val()
+        if (image == '') {
+            toastr.error("please Select Image")
+        } else {
+            formData.append('categoryImage', image)
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                data: formData,
+                success: function (data) {
+                    form.reset()
+                    document.getElementById('imageAtCreate').src = ""
+                    $('#modalAddCategory').modal('hide');
+                    toastr.success(data.msg)
+                    if (data.data.reloadRequired) {
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 2000)
+                    }
+                },
+                error: function (err) {
+                    form.reset()
+                    document.getElementById('imageAtCreate').src = ""
+                    $('#modalAddCategory').modal('hide');
+                    toastr.error(err.responseJSON.err_msg || 'Something went wrong')
+                }
+            });
+        }
+    })
+
+    $('form#formUpdateCategory').submit(function (e) {
+        e.preventDefault()
+        var form = this;
+        var formData = new FormData(form)
+        var image = $('#newCategoryImage').val()
+        if (image != '') {
+            formData.append('newCategoryImage', image);
+        } else {
+            formData.delete('newCategoryImage')
+        }
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            data: formData,
+            success: function (data) {
+                form.reset()
+                $('#modalUpdateCategory').modal('hide');
+                toastr.success(data.msg)
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000)
+            },
+            error: function (err) {
+                form.reset()
+                $('#modalUpdateCategory').modal('hide');
+                toastr.error(err.msg || 'Something went wrong')
+            }
+        });
+
+    })
+
+    $('form#formUploadBanner').submit(function (e) {
+        e.preventDefault()
+        var form = this;
+        var formData = new FormData(form)
+        var image = $('#bannerImage').val()
+        formData.append('bannerImage', image)
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            data: formData,
+            success: function (data) {
+                form.reset()
+                toastr.success(data.msg)
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000)
+            },
+            error: function (err) {
+                form.reset()
+                toastr.error(err.msg || 'Something went wrong')
+            }
+        });
+    })
+
+    $('form#formAddPaymentGateway').submit(function (e) {
+        e.preventDefault()
+        var form = this;
+        var formData = new FormData(form)
+        var image = $('#paymentGatewayImage').val()
+        var isActive = $('#isActive').checked
+        formData.append('image', image)
+        formData.append('isActive', isActive)
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            data: formData,
+            success: function (data) {
+                form.reset()
+                $('#modalAddPaymentGateway').modal('hide');
+                toastr.success(data.msg)
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000)
+            },
+            error: function (err) {
+                form.reset()
+                $('#modalAddPaymentGateway').modal('hide');
+                toastr.error(err.msg || 'Something went wrong')
+            }
+        })
+    });
+
+    $('form#formBulkUpload').submit(function (e) {
+        e.preventDefault()
+        var form = this;
+        var formData = new FormData(form)
+        var csv = $('#csvFile').val()
+        formData.append('csvFile', csv);
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            data: formData,
+            success: function (data) {
+                form.reset()
+                document.getElementById('selectedFileName').innerHTML = ""
+                $('#modalBulkUpload').modal('hide');
+                toastr.success(data.msg)
+            },
+            error: function (err) {
+                form.reset()
+                document.getElementById('selectedFileName').innerHTML = ""
+                $('#modalBulkUpload').modal('hide');
+                toastr.error(err.msg || 'Something went wrong')
+            }
+        })
+    })
+
+    $('form#formAppSetting').submit(function (e) {
+        e.preventDefault();
+        var form = this;
+        var formData = new FormData(form)
+        formData.delete('files')
+        var image = $('#userPlaceholder').val()
+        if (image != '') {
+            formData.append('userPlaceholder', image);
+        } else {
+            formData.delete('userPlaceholder')
+        }
+        formData.set('ruleOfQuiz', tinyMCE.get('ruleOfQuiz').getContent())
+        formData.set('updateAppMessage', tinyMCE.get('updateAppMessage').getContent())
+        formData.set('privacyPolicy', tinyMCE.get('privacyPolicy').getContent())
+        formData.set('termsOfUse', tinyMCE.get('termsOfUse').getContent())
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            data: formData,
+            success: function (data) {
+                toastr.success(data.msg)
+            },
+            error: function (err) {
+                toastr.error(err.msg || 'Something went wrong')
+            }
+        })
+    })
+
+    $('form#formAdminSetting').submit(function (e) {
+        e.preventDefault()
+        var form = this;
+        var formData = new FormData(form)
+        formData.delete('files')
+        var image = $('#appIcon').val()
+        if (image != '') {
+            formData.append('appIcon', image);
+        } else {
+            formData.delete('appIcon')
+        }
+        $.ajax({
+            type: "POST",
+            url: $(this).attr('action'),
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            data: formData,
+            success: function (data) {
+                toastr.success(data.msg)
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000)
+            }, error: function (err) {
+                toastr.error(err.msg || 'Something went wrong')
+            }
+        })
+    });
+
+    tinymce.init({
+        selector: '.textarea-app',
+        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+        toolbar: 'undo redo | blocks fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+        tinycomments_mode: 'embedded',
+        tinycomments_author: 'Author name',
+        mergetags_list: [
+            { value: 'First.Name', title: 'First Name' },
+            { value: 'Email', title: 'Email' },
+        ]
+    });
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+</body>
+
+</html>

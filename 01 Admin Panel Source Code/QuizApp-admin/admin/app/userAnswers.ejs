@@ -1,0 +1,134 @@
+<% if (user) { %>
+    <%- include('../partials/header.ejs') %>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">User Answers <i class="fas fa-check"></i></h1>
+                        </div><!-- /.col -->
+                        <!-- Sort Dropdown -->
+                        <div class="col-sm-6">
+                            <div class="float-sm-right">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="sortDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        -Sort by-
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="sortDropdown">
+                                        <a class="dropdown-item" href="?sort=userId">User ID</a>
+                                        <a class="dropdown-item" href="?sort=categoryId">Category ID</a>
+                                        <a class="dropdown-item" href="?sort=level">Level</a>
+                                        <a class="dropdown-item" href="?sort=questionId">Question ID</a>
+                                        <a class="dropdown-item" href="?sort=selectedAnswer">Selected Answer</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Sort Dropdown -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <% if (userAnswers.length > 0) { %>
+                                        <div class="mb-3">
+                                            <a href="/export/user-answers" class="btn btn-success">Bulk Export</a>
+                                        </div>
+                                        <table id="userAnswersTable" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>User ID</th>
+                                                    <th>Category ID</th>
+                                                    <th>Level</th>
+                                                    <th>Question ID</th>
+                                                    <th>Selected Answer</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% userAnswers.forEach((answer, index) => { %>
+                                                    <tr>
+                                                        <td><%= index + 1 %></td>
+                                                        <td><%= answer.userId %></td>
+                                                        <td><%= answer.categoryId %></td>
+                                                        <td><%= answer.level %></td>
+                                                        <td><%= answer.questionId %></td>
+                                                        <td><%= answer.selectedAnswer %></td>
+                                                        <td>
+                                                            <button class="btn btn-danger btn-sm"
+                                                                onclick="handleDelete('<%= answer._id %>')">Delete</button>
+                                                        </td>
+                                                    </tr>
+                                                <% }); %>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>User ID</th>
+                                                    <th>Category ID</th>
+                                                    <th>Level</th>
+                                                    <th>Question ID</th>
+                                                    <th>Selected Answer</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    <% } else { %>
+                                        <div class="row">
+                                            <div class="offset-4 col-4 text-center">
+                                                <label class="d-flex justify-content-center align-items-center text-muted"
+                                                    for="inputSuccess">
+                                                    <i class="fas fa-ban mr-3" style="font-size: xxx-large;"></i>
+                                                    No User Answers Found
+                                                </label>
+                                            </div>
+                                        </div>
+                                    <% } %>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <script>
+            function handleDelete(id) {
+                if (confirm("Are you sure you want to delete this user answer?")) {
+                    // Send AJAX request to delete user answer
+                    $.ajax({
+                        url: `/useranswers/${id}`,
+                        type: 'DELETE',
+                        success: function (data) {
+                            // Refresh the page after successful deletion
+                            window.location.reload();
+                        },
+                        error: function (xhr, status, error) {
+                            // Handle error
+                            console.error(error);
+                            alert("Failed to delete user answer.");
+                        }
+                    });
+                }
+            }
+        </script>
+
+    <%- include('../partials/footer.ejs') %>
+<% } else { %>
+    <%- include('../auth/login.ejs') %>
+<% } %>

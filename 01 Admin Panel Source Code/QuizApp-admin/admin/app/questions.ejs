@@ -1,0 +1,286 @@
+<% if (user) { %>
+    <%- include('../partials/header.ejs') %>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Questions of <b>
+                                    <%= data.name %>
+                                </b></h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                                <li class="breadcrumb-item"><a href="/questions">Questions</a></li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <button type="button" class="btn btn-info btn-block" data-toggle="modal"
+                                                data-target="#modalBulkUpload">
+                                                <i class="fas fa-file-csv">&nbsp;</i>
+                                                Bulk Import
+                                            </button>
+                                        </div>
+                                        <div class="col-6">
+                                            <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                                                data-target="#modalAddQuestion">
+                                                <i class="fas fa-plus">&nbsp;</i>
+                                                Add New Question
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Question</th>
+                                                <th>Level</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% for( let index=0; index < data.questions.length; index++ ) { %>
+                                                <tr>
+                                                    <td>
+                                                        <%= index + 1 %>
+                                                    </td>
+                                                    <td>
+                                                        <%= data.questions[index].question %>
+                                                    </td>
+                                                    <td>
+                                                        <%= data.questions[index].level %>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-danger btn-sm"
+                                                            onclick="handleDelete('<%= data.questions[index]._id %>')">Delete</button>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Question</th>
+                                                <th>Level</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </section>
+            <!-- /.content -->
+            <div class="modal fade" id="modalAddQuestion" aria-modal="true" role="dialog"
+                style="padding-right: 17px; display: none;">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add New Question (<b>
+                                    <%= data.name %>
+                                </b>)</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="txtQuestion">Question</label>
+                                <textarea class="form-control" id="txtQuestion" name="question"
+                                    placeholder="Enter Question" required></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="optionA">Option A</label>
+                                        <input class="form-control" id="optionA" name="optionA"
+                                            placeholder="Enter option A" required>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="optionB">Option B</label>
+                                        <input class="form-control" id="optionB" name="optionB"
+                                            placeholder="Enter option B" required>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="optionC">Option C</label>
+                                        <input class="form-control" id="optionC" name="optionC"
+                                            placeholder="Enter option C" required>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="optionC">Option D</label>
+                                        <input class="form-control" id="optionD" name="optionD"
+                                            placeholder="Enter option D" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="answer">Answer</label>
+                                        <input class="form-control" id="answer" name="answer" placeholder="Enter Answer"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Level</label>
+                                        <select class="form-control select2" style="width: 100%;" id="ddlLevel">
+                                            <option value="" selected="selected">---- SELECT LEVEL ----</option>
+                                            <option value="Easy">Easy</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="Hard">Hard</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="handleAddQuestion()">Save</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+
+            <div class="modal fade" id="modalBulkUpload" aria-modal="true" role="dialog"
+                style="padding-right: 17px; display: none;">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Import Questions from CSV (<b>
+                                    <%= data.name %>
+                                </b>)</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-header">
+                            <h6>Download Sample CSV File from <a href="/uploads/questions/Sample.csv"
+                                    target="_blank">Here</a>.</h6>
+                        </div>
+                        <form id="formBulkUpload" action="/bulkQuestion" method="POST" enctype="multipart/form-data">
+                            <input type="text" id="_id" name="_id" value="<%= data._id %>" style="display: none;">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label>
+                                        <%= data.name %> Que. File
+                                    </label>
+                                    <div class="input-group custom-file-button">
+                                        <label class="input-group-text" for="csvFile">Choose File</label>
+                                        <lable id="selectedFileName" class="d-flex align-items-center ml-2"></lable>
+                                        <input type="file"
+                                            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/comma-separated-values"
+                                            class="form-control" id="csvFile" name="csvFile" style="display: none;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+            </div>
+        </div>
+        <!-- /.content-wrapper -->
+        <script type="text/javascript">
+
+            const categoryId = '<%= data._id %>'
+            document.getElementById('csvFile').onchange = function () {
+                document.getElementById('selectedFileName').innerHTML = this.files[0].name
+            };
+
+            function handleDelete(id) {
+                $.ajax({
+                    url: `/question/${id}`,
+                    type: 'DELETE',
+                    data: null,
+                    contentType: 'application/json',
+                    success: function (data) {
+                        toastr.success(data.msg)
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 2000)
+                    },
+                    error: function (err) {
+                        toastr.error(err.responseJSON.err_msg)
+                    }
+                })
+            }
+
+            function handleAddQuestion() {
+                const data = {
+                    categoryId,
+                    question: document.getElementById('txtQuestion').value,
+                    optionA: document.getElementById('optionA').value,
+                    optionB: document.getElementById('optionB').value,
+                    optionC: document.getElementById('optionC').value,
+                    optionD: document.getElementById('optionD').value,
+                    answer: document.getElementById('answer').value,
+                    level: document.getElementById('ddlLevel').value,
+                }
+                if (data.question === '' || data.optionA === '' || data.optionB === "" || data.optionC === '' || data.optionD === '' || data.answer === '' || data.level === '') {
+                    toastr.error('all fields are Mandatory, please fill up')
+                } else {
+                    if (data.answer === data.optionA || data.answer === data.optionB || data.answer === data.optionC || data.answer === data.optionD) {
+                        $.ajax({
+                            url: '/addQuestions',
+                            type: 'POST',
+                            data: JSON.stringify(data),
+                            contentType: 'application/json',
+                            success: function (data) {
+                                $('#modalAddQuestion').modal('hide');
+                                toastr.success(data.msg)
+                                setTimeout(() => {
+                                    window.location.reload()
+                                }, 2000)
+                            },
+                            error: function (err) {
+                                $('#modalAddQuestion').modal('hide');
+                                toastr.error(err.responseJSON.err_msg)
+                            }
+                        })
+                    } else {
+                        toastr.error('Answer not matched with given Options')
+                    }
+                }
+            }
+
+        </script>
+        <%- include('../partials/footer.ejs') %>
+            <% } else { %>
+                <%- include('../auth/login.ejs') %>
+                    <% } %>

@@ -1,0 +1,86 @@
+<% if (user) { %>
+     <%- include('../partials/header.ejs') %> 
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Contact Us</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                            <li class="breadcrumb-item active">Contact Us</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+    
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <table id="example1" class="table table-bordered table-striped projects">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Message</th>
+                                            <th>CreatedBy</th>
+                                            <th>Created At</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for( let index = 0; index < data.length; index++ ) { %>
+                                        <tr>
+                                            <td><%= index+1 %></td>
+                                            <td><%= data[index].name %></td>
+                                            <td><%= data[index].email %></td>
+                                            <td><%= data[index].message %></td>
+                                            <td>
+                                                <div class="user-block">
+                                                    <img src="<%= data[index].user.profilePic %>" alt="profile_pic" class="img-circle mr-1">
+                                                    <%= data[index].user.name %>
+                                                </div>
+                                            </td>
+                                            <td><%= data[index].createdAt.toLocaleString() %></td>
+                                        </tr>
+                                        <% } %>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Message</th>
+                                            <th>CreatedBy</th>
+                                            <th>Created At</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    
+    <script type="text/javascript">
+    </script>
+    <%- include('../partials/footer.ejs') %> 
+<% } else { %>
+    <%- include('../auth/login.ejs') %>
+<% } %>

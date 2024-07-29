@@ -1,0 +1,78 @@
+<% if (user) { %>
+    <%- include('../partials/header.ejs') %>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Questions By Category</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                                <li class="breadcrumb-item active">Questions</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                        <% if (data.length> 0) { %>
+                            <% for( let index=0; index < data.length; index++ ) { %>
+                                <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+                                    <div
+                                        class="card d-flex flex-fill <%= data[index].isActive ? data[index].isFeature ? 'bg-success' : 'bg-light' : 'bg-danger' %>">
+                                        <div class="card-header border-bottom-0">
+                                            <h2>
+                                                <%= data[index].name %>
+                                            </h2>
+                                        </div>
+                                        <div class="card-body pt-0">
+                                            <div class="row align-items-center">
+                                                <div class="col-7">
+                                                    <p class="text-md"><b>Questions: </b>
+                                                        <%= data[index].questionCount %>
+                                                    </p>
+                                                    <a href="/questions/<%= data[index]._id %> "
+                                                        class="btn btn-sm btn-primary">
+                                                        View Questions
+                                                    </a>
+                                                </div>
+                                                <div class="col-5 text-center">
+                                                    <img src="../<%= data[index].image %> " alt="user-avatar"
+                                                        class="img-circle img-fluid"
+                                                        style="float: right; height:100px; width: 100px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
+                                    <% } else { %>
+                                        <div class="offset-4 col-4 text-center">
+                                            <label class="d-flex justify-content-center align-items-center text-muted"
+                                                for="inputSuccess">
+                                                <i class="fas fa-ban mr-3" style="font-size: xxx-large;"></i>
+                                                No Category Found
+                                            </label>
+                                        </div>
+                                        <% } %>
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <%- include('../partials/footer.ejs') %>
+            <% } else { %>
+                <%- include('../auth/login.ejs') %>
+                    <% } %>

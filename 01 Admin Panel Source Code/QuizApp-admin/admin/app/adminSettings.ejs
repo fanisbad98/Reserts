@@ -1,0 +1,93 @@
+<% if (user) { %>
+    <%- include('../partials/header.ejs') %> 
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Admin Settings</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                            <li class="breadcrumb-item active">Admin Settings</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+    
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form id="formAdminSetting" action="/updateAdminSetting" method="POST" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="appName">Header Name</label>
+                                                <input type="string" class="form-control" name="appName" id="appName"
+                                                    placeholder="Header Name" value="<%= app.appName %>" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="copyrightYear">Copyright Year</label>
+                                                <input type="string" class="form-control" name="copyrightYear" id="copyrightYear"
+                                                    placeholder="Copyright year" value="<%= app.copyrightYear %>" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="appHost">Host URL</label>
+                                                <input type="string" class="form-control" name="appHost" id="appHost"
+                                                    placeholder="Host url" value="<%= app.appHost %>" />
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <label>Header Image</label>
+                                                    <div class="input-group custom-file-button">
+                                                        <label class="input-group-text" for="appIcon">Change Image</label>
+                                                        <input type="file" class="form-control" accept="image/*" id="appIcon" name="appIcon"
+                                                            onchange="handlePickIcon()" style="display: none;">
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <img class="img-circle mt-3" id="currentImage" src="<%= app.appIcon %>" style="height: 200px;" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <button type="submit" class="btn btn-lg btn-primary">Update</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    
+    <script type="text/javascript">
+        function handlePickIcon() {
+            let reader = new FileReader();
+            reader.readAsDataURL(document.getElementById('appIcon').files[0]);
+            reader.onload = function (e) {
+                document.getElementById('currentImage').src = e.target.result;
+            }
+        }
+    </script>
+    <!-- /.content-wrapper -->
+    <%- include('../partials/footer.ejs') %> 
+<% } else { %>
+    <%- include('../auth/login.ejs') %>
+<% } %>

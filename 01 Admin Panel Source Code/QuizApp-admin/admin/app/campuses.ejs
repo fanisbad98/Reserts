@@ -1,0 +1,138 @@
+<% if (user) { %>
+    <%- include('../partials/header.ejs') %>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Campuses</h1>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <button type="button" class="btn btn-primary mb-2" data-toggle="modal"
+                                        data-target="#modalAddCampus">
+                                        <i class="fas fa-plus"></i> Add Campus
+                                    </button>
+                                    <% if (campuses.length > 0) { %>
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Name</th>
+                                                    <th>Members</th>
+                                                    <th>Points</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% campuses.forEach((campus, index) => { %>
+                                                    <tr>
+                                                        <td><%= index + 1 %></td>
+                                                        <td><%= campus.name %></td>
+                                                        <td><%= campus.members %></td>
+                                                        <td><%= campus.points %></td>
+                                                        <td>
+                                                            <button class="btn btn-danger btn-sm"
+                                                                onclick="handleDeleteCampus('<%= campus._id %>')">Delete</button>
+                                                        </td>
+                                                    </tr>
+                                                <% }); %>
+                                            </tbody>
+                                        </table>
+                                    <% } else { %>
+                                        <div class="row">
+                                            <div class="offset-4 col-4 text-center">
+                                                <label class="d-flex justify-content-center align-items-center text-muted"
+                                                    for="inputSuccess">
+                                                    <i class="fas fa-ban mr-3" style="font-size: xxx-large;"></i>
+                                                    No Campuses Found
+                                                </label>
+                                            </div>
+                                        </div>
+                                    <% } %>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </section>
+            <!-- /.content -->
+            <!-- Modal for adding a campus -->
+            <div class="modal fade" id="modalAddCampus" tabindex="-1" role="dialog"
+                aria-labelledby="modalAddCampusLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalAddCampusLabel">Add Campus</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="formAddCampus" action="/addCampus" method="POST">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="campusName">Campus Name</label>
+                                    <input type="text" class="form-control" id="campusName" name="campusName"
+                                        placeholder="Enter Campus Name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="campusMembers">Members</label>
+                                    <input type="number" class="form-control" id="campusMembers" name="campusMembers"
+                                        placeholder="Enter Number of Members" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="campusPoints">Points</label>
+                                    <input type="number" class="form-control" id="campusPoints" name="campusPoints"
+                                        placeholder="Enter Points" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.content-wrapper -->
+        <script type="text/javascript">
+
+            function handleDeleteCampus(id) {
+                $.ajax({
+                    url: `/campus/${id}`,
+                    type: 'DELETE',
+                    data: null,
+                    contentType: 'application/json',
+                    success: function (data) {
+                        toastr.success(data.msg)
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 2000)
+                    },
+                    error: function (err) {
+                        toastr.error(err.responseJSON.err_msg)
+                    }
+                })
+            }
+
+        </script>
+        <%- include('../partials/footer.ejs') %>
+<% } else { %>
+    <%- include('../auth/login.ejs') %>
+<% } %>

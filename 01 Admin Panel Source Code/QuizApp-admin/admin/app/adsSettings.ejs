@@ -1,0 +1,188 @@
+<% if (user) { %>
+    <%- include('../partials/header.ejs') %> 
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Ads Settings</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+                            <li class="breadcrumb-item active">Ads Settings</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+    
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-switch custom-switch-on-success">
+                                                <input type="checkbox" class="custom-control-input" id="isVideoAdsShow" <%=setting.isVideoAdsShow
+                                                    ? 'checked' : 'unchecked' %> />
+                                                <label class="custom-control-label" for="isVideoAdsShow">Video Ads <span class="fas fa-info-circle ml-1" data-toggle="tooltip" data-placement="top"
+                                                    title="if Active then user can see Video ad after complete the Quiz, otherwise it will show Interstitial Ad"></span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-switch custom-switch-on-success">
+                                                <input type="checkbox" class="custom-control-input" id="isRewardedVideoAdsShow"
+                                                    <%=setting.isRewardedVideoAdsShow ? 'checked' : 'unchecked' %> />
+                                                <label class="custom-control-label" for="isRewardedVideoAdsShow">Rewarded Video Ads</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-switch custom-switch-on-success">
+                                                <input type="checkbox" class="custom-control-input" id="isAdShow" <%= setting.isAdShow ? 'checked' : 'unchecked' %> />
+                                                <label class="custom-control-label" for="isAdShow">Ads Show</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="adCount">Ad Count <span class="fas fa-info-circle ml-1" data-toggle="tooltip" data-placement="top"
+                                                    title="Enter page count for full screen(Interstitial) ad. user can see add on no. of screen redirects"></span></label>
+                                            <input type="number" class="form-control" id="adCount" value="<%= setting.adCount %>"
+                                                placeholder="Enter Page count per Ad" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="rewardedVideoPoint">Rewarded Video Ad Points </label>
+                                            <input type="number" class="form-control" id="rewardedVideoPoint" value="<%= setting.rewardedVideoPoint %>"
+                                                placeholder="Enter Points to Earn per Video Ad" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="androidAdMobAppId">AdMob App Id (Android)</label>
+                                            <input type="string" class="form-control" id="androidAdMobAppId" value="<%= setting.androidAdMobAppId %>" placeholder="Enter AdMob App ID for Android" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="iOSAdMobAppId">AdMob App Id (iOS)</label>
+                                            <input type="string" class="form-control" id="iOSAdMobAppId" value="<%= setting.iOSAdMobAppId %>" placeholder="Enter AdMob App ID for iOS" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="androidAdMobBannerId">AdMob Banner AdID (Android)</label>
+                                            <input type="string" class="form-control" id="androidAdMobBannerId" value="<%= setting.androidAdMobBannerId %>" placeholder="Enter AdMob Banner AdID for Android" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="iOSAdMobBannerId">AdMob Banner AdID (iOS)</label>
+                                            <input type="string" class="form-control" id="iOSAdMobBannerId" value="<%= setting.iOSAdMobBannerId %>" placeholder="Enter AdMob Banner AdID for iOS" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="androidAdMobInterstitialAdId">AdMob Interstitial AdID (Android)</label>
+                                            <input type="string" class="form-control" id="androidAdMobInterstitialAdId" value="<%= setting.androidAdMobInterstitialAdId %>" placeholder="Enter AdMob Interstitial AdID for Android" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="iOSAdMobInterstitialAdId">AdMob Interstitial AdID (iOS)</label>
+                                            <input type="string" class="form-control" id="iOSAdMobInterstitialAdId" value="<%= setting.iOSAdMobInterstitialAdId %>" placeholder="Enter AdMob Interstitial AdID for iOS" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="androidAdMobRewardedVideoAdId">AdMob Rewarded Video AdID (Android)</label>
+                                            <input type="string" class="form-control" id="androidAdMobRewardedVideoAdId" value="<%= setting.androidAdMobRewardedVideoAdId %>" placeholder="Enter AdMob Rewarded Video AdID for Android" />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="iOSAdMobRewardedVideoAdId">AdMob Rewarded Video AdID (iOS)</label>
+                                            <input type="string" class="form-control" id="iOSAdMobRewardedVideoAdId" value="<%= setting.iOSAdMobRewardedVideoAdId %>" placeholder="Enter AdMob Rewarded Video AdID for iOS" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <button class="btn btn-lg btn-primary" onclick="handleUpdate()">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <script type="text/javascript">
+        function handleUpdate() {
+            let data = {
+                isAdShow : document.getElementById('isAdShow').checked,
+                isVideoAdsShow: document.getElementById('isVideoAdsShow').checked,
+                isRewardedVideoAdsShow: document.getElementById('isRewardedVideoAdsShow').checked,
+                adCount:document.getElementById('adCount').value,
+                rewardedVideoPoint:document.getElementById('rewardedVideoPoint').value,
+                androidAdMobAppId: document.getElementById('androidAdMobAppId').value,
+                androidAdMobBannerId: document.getElementById('androidAdMobBannerId').value,
+                androidAdMobInterstitialAdId: document.getElementById('androidAdMobInterstitialAdId').value,
+                androidAdMobRewardedVideoAdId: document.getElementById('androidAdMobRewardedVideoAdId').value,
+                iOSAdMobAppId: document.getElementById('iOSAdMobAppId').value,
+                iOSAdMobBannerId: document.getElementById('iOSAdMobBannerId').value,
+                iOSAdMobInterstitialAdId: document.getElementById('iOSAdMobInterstitialAdId').value,
+                iOSAdMobRewardedVideoAdId: document.getElementById('iOSAdMobRewardedVideoAdId').value,
+            }
+    
+            $.ajax({
+                url: '/updateAppSetting',
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function (data) {
+                    toastr.success(data.msg)
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 2000)
+                },
+                error: function (err) {
+                    toastr.error(err.responseJSON.err_msg)
+                }
+            })
+    
+        }
+    </script>
+    <%- include('../partials/footer.ejs') %> 
+<% } else { %>
+    <%- include('../auth/login.ejs') %>
+<% }%>

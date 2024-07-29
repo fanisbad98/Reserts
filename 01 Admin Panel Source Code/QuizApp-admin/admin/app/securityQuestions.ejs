@@ -1,0 +1,210 @@
+<% if (user) { %>
+    <%- include('../partials/header.ejs') %>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Security Questions</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modalAddQuestion">
+                                    <i class="fas fa-plus">&nbsp;</i>
+                                    Add Security Question
+                                </button>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <% if (securityQuestions.length > 0) { %>
+                                        <table id="example1" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Question</th>
+                                                    <th>Options</th>
+                                                    <th>Answer</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% securityQuestions.forEach((question, index) => { %>
+                                                    <tr>
+                                                        <td><%= index + 1 %></td>
+                                                        <td><%= question.question %></td>
+                                                        <td>
+                                                            <ul>
+                                                                <% question.options.forEach(option => { %>
+                                                                    <li><%= option %></li>
+                                                                <% }); %>
+                                                            </ul>
+                                                        </td>
+                                                        <td><%= question.answer %></td>
+                                                        <td>
+                                                            <button class="btn btn-danger btn-sm" onclick="handleDelete('<%= question._id %>')">Delete</button>
+                                                        </td>
+                                                    </tr>
+                                                <% }); %>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Question</th>
+                                                    <th>Options</th>
+                                                    <th>Answer</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    <% } else { %>
+                                        <div class="row">
+                                            <div class="offset-4 col-4 text-center">
+                                                <label class="d-flex justify-content-center align-items-center text-muted" for="inputSuccess">
+                                                    <i class="fas fa-ban mr-3" style="font-size: xxx-large;"></i>
+                                                    No Security Questions Found
+                                                </label>
+                                            </div>
+                                        </div>
+                                    <% } %>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </section>
+            <!-- /.content -->
+
+            <!-- Modal for Adding Security Question -->
+            <div class="modal fade" id="modalAddQuestion" aria-modal="true" role="dialog">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add New Security Question</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="txtQuestion">Question</label>
+                                <textarea class="form-control" id="txtQuestion" name="question" placeholder="Enter Question" required></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="optionA">Option A</label>
+                                        <input class="form-control" id="optionA" name="optionA" placeholder="Enter option A" required>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="optionB">Option B</label>
+                                        <input class="form-control" id="optionB" name="optionB" placeholder="Enter option B" required>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="optionC">Option C</label>
+                                        <input class="form-control" id="optionC" name="optionC" placeholder="Enter option C" required>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="optionD">Option D</label>
+                                        <input class="form-control" id="optionD" name="optionD" placeholder="Enter option D" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="answer">Answer</label>
+                                <select class="form-control" id="answer" name="answer" required>
+                                    <option value="">-- Select Correct Answer --</option>
+                                    <option value="optionA">Option A</option>
+                                    <option value="optionB">Option B</option>
+                                    <option value="optionC">Option C</option>
+                                    <option value="optionD">Option D</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="handleAddQuestion()">Save</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+
+            <script type="text/javascript">
+                function handleDelete(id) {
+                    $.ajax({
+                        url: `/securityQuestion/${id}`,
+                        type: 'DELETE',
+                        data: null,
+                        contentType: 'application/json',
+                        success: function (data) {
+                            toastr.success(data.msg);
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 2000);
+                        },
+                        error: function (err) {
+                            toastr.error(err.responseJSON.err_msg);
+                        }
+                    });
+                }
+
+                function handleAddQuestion() {
+                    const data = {
+                        question: document.getElementById('txtQuestion').value,
+                        optionA: document.getElementById('optionA').value,
+                        optionB: document.getElementById('optionB').value,
+                        optionC: document.getElementById('optionC').value,
+                        optionD: document.getElementById('optionD').value,
+                        answer: document.getElementById('answer').value
+                    };
+                    if (data.question === '' || data.optionA === '' || data.optionB === '' || data.optionC === '' || data.optionD === '' || data.answer === '') {
+                        toastr.error('All fields are mandatory, please fill up');
+                    } else {
+                        $.ajax({
+                            url: '/addSecurityQuestion',
+                            type: 'POST',
+                            data: JSON.stringify(data),
+                            contentType: 'application/json',
+                            success: function (data) {
+                                $('#modalAddQuestion').modal('hide');
+                                toastr.success(data.msg);
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 2000);
+                            },
+                            error: function (err) {
+                                $('#modalAddQuestion').modal('hide');
+                                toastr.error(err.responseJSON.err_msg);
+                            }
+                        });
+                    }
+                }
+            </script>
+        <%- include('../partials/footer.ejs') %>
+<% } else { %>
+    <%- include('../auth/login.ejs') %>
+<% } %>

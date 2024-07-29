@@ -1,0 +1,47 @@
+{
+  "name": "quizapp-admin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm install",
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/satyamkhatrani/QuizApp-admin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/satyamkhatrani/QuizApp-admin/issues"
+  },
+  "homepage": "https://github.com/satyamkhatrani/QuizApp-admin#readme",
+  "dependencies": {
+    "@onesignal/node-onesignal": "^1.0.0-beta9",
+    "app-root-path": "^3.1.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "connect-flash": "^0.1.1",
+    "connect-mongodb-session": "^2.2.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "exceljs": "^4.3.0",
+    "express": "^4.18.2",
+    "express-jwt": "^8.4.1",
+    "express-session": "^1.17.3",
+    "joi": "^17.7.0",
+    "jsonwebtoken": "^9.0.0",
+    "lodash": "^4.17.21",
+    "md5": "^2.3.0",
+    "mongoose": "^6.12.8",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^3.1.0",
+    "winston": "^3.8.2"
+  }
+}

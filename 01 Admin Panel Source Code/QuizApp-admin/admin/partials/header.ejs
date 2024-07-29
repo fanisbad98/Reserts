@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        <%= app.appName %> | Dashboard
+    </title>
+    <link rel="icon" type="image/x-icon" href="<%= app.appIcon %>">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../public/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../public/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../public/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="../public/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="../public/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../public/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="../public/plugins/jqvmap/jqvmap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../public/dist/css/adminlte.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="../public/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="../public/plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="../public/plugins/toastr/toastr.min.css" />
+    <script src="https://cdn.tiny.cloud/1/sysfqxqor9j188tjwjyczxn6q46xm73ee31vb5m6qxi3209h/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
+    <style>
+        textarea {
+            overflow-y: scroll;
+            height: 100px;
+            resize: none;
+        }
+    </style>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
+    <script type="text/javascript">
+        function disableBackButton() {
+            window.history.forward();
+        }
+        setTimeout(disableBackButton(), 0);
+
+        function handleChangePassword() {
+            $('#modalChangePassword').modal('show');
+        }
+
+        function checkPassword() {
+            let enter = $('#newPassword').val()
+            let reEnter = $('#reEnterPassword').val()
+            if (reEnter != '') {
+                if (enter == reEnter) {
+                    $('#reEnterPassword').removeClass("is-invalid")
+                    $('#reEnterPassword').addClass('is-valid')
+                } else {
+                    $('#reEnterPassword').addClass('is-invalid')
+                    $('#reEnterPassword').removeClass('is-valid')
+                }
+            }
+        }
+    </script>
+    <div class="wrapper">
+
+        <!-- Preloader -->
+        <% if (pageName==='dashboard' ) { %>
+            <div class="preloader flex-column justify-content-center align-items-center">
+                <img class="animation__shake" src="<%= app.appIcon %>" alt="App_Icon" height="60" width="60">
+            </div>
+            <% } %>
+
+                <!-- Navbar -->
+                <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+                    <!-- Left navbar links -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
+                                    class="fas fa-bars"></i></a>
+                        </li>
+                        <li class="nav-item d-none d-sm-inline-block">
+                            <a href="/dashboard" class="nav-link">Home</a>
+                        </li>
+                    </ul>
+
+                    <!-- Right navbar links -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Notifications Dropdown Menu -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" data-toggle="dropdown" href="#">
+                                <i class="far fa-user"></i>
+                                <span class="badge badge-warning navbar-badge"></span>
+                                <b class="ml-1">
+                                    <%= user.name %>
+                                </b>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-md dropdown-menu-left">
+                                <a id="btnChangePassword" class="dropdown-item text-info"
+                                    onclick="handleChangePassword()">
+                                    Change Password
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a id="btnLogout" class="dropdown-item text-danger">
+                                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.navbar -->
+
+                <!-- Main Sidebar Container -->
+                <aside class="main-sidebar sidebar-dark-primary elevation-4">
+                    <!-- Brand Logo -->
+                    <a href="/dashboard" class="brand-link">
+                        <img src="<%= app.appIcon %>" alt="Logo" class="brand-image elevation-3" style="opacity: .8">
+                        <span class="brand-text font-weight-light">
+                            <%= app.appName %>
+                        </span>
+                    </a>
+
+                    <!-- Sidebar -->
+                    <div class="sidebar">
+                        <!-- Sidebar Menu -->
+                        <nav class="mt-2">
+                            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                                data-accordion="false">
+                                <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+                                <li class="nav-item">
+                                    <a href="/dashboard" class="nav-link <% if (pageName === 'dashboard') { %>
+                                 active 
+                                <% } %> ">
+                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                        <p>
+                                            Dashboard
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/homeScreenBanner" class="nav-link <% if (pageName === 'homeScreenBanner') { %>
+                                                         active 
+                                                        <% } %>">
+                                        <i class="nav-icon fas fa-mobile-alt"></i>
+                                        <p>
+                                            Home Screen Banner
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/pushNotification" class="nav-link <% if (pageName === 'pushNotification') { %>
+                                                         active 
+                                                        <% } %>">
+                                        <i class="nav-icon fas fa-bell"></i>
+                                        <p>
+                                            Push Notification
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/users" class="nav-link <% if (pageName === 'users') { %>
+                                 active 
+                                <% } %>">
+                                        <i class="nav-icon fas fa-users"></i>
+                                        <p>
+                                            Users
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/categories" class="nav-link <% if (pageName === 'categories') { %>
+                                 active 
+                                <% } %>">
+                                        <i class="nav-icon fas fa-bars"></i>
+                                        <p>
+                                            Categories
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/campuses" class="nav-link <% if (pageName === 'campuses') { %> active <% } %>">
+                                        <i class="nav-icon fas fa-university"></i>
+                                        <p>Campuses</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/securityQuestions" class="nav-link <% if (pageName === 'securityQuestions') { %> active <% } %>">
+                                        <i class="nav-icon fas fa-shield-alt"></i>
+                                        <p>Security Questions</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/questions" class="nav-link <% if (pageName === 'questions') { %>
+                                 active 
+                                <% } %>">
+                                        <i class="nav-icon fas fa-question"></i>
+                                        <p>
+                                            Questions
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/userAnswers" class="nav-link <% if (pageName === 'userAnswers') { %> active <% } %>">
+                                        <i class="nav-icon fas fa-university"></i>
+                                        <p>User Answers</p>
+                                    </a>
+                                <li class="nav-item">
+                                    <a href="/withdrawals" class="nav-link <% if (pageName === 'withdrawals') { %>
+                                 active 
+                                <% } %>">
+                                        <i class="nav-icon fas fa-money-check-alt"></i>
+                                        <p>
+                                            Withdrawals
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/contactus" class="nav-link <% if (pageName === 'contactus') { %>
+                                                         active 
+                                                        <% } %>">
+                                        <i class="nav-icon fas fa-envelope-open-text"></i>
+                                        <p>
+                                            Contact Us
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item <% if(pageName === 'appSettings' || pageName === 'adsSettings' || pageName === 'paymentSettings') { %> 
+                            menu-open
+                            <% } %>">
+                                    <a href="#" class="nav-link <% if(pageName === 'appSettings' || pageName === 'adsSettings' || pageName === 'paymentSettings') { %>
+                                active
+                                <% } %>">
+                                        <i class="nav-icon fas fa-cogs"></i>
+                                        <p>
+                                            Settings
+                                            <i class="right fas fa-angle-left"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="/appSettings" class="nav-link <% if(pageName === 'appSettings') { %>
+                                        active
+                                        <% } %>">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>App Settings</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/adsSettings" class="nav-link<% if(pageName === 'adsSettings') { %>
+                                        active
+                                        <% } %>">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Ads Setting</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/paymentSettings" class="nav-link<% if(pageName === 'paymentSettings') { %>
+                                                                        active
+                                                                        <% } %>">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Payment Setting</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/adminSettings" class="nav-link <% if (pageName === 'adminSettings') { %>
+                                                             active 
+                                                            <% } %>">
+                                        <i class="nav-icon fas fa-user-cog"></i>
+                                        <p>
+                                            Admin Setting
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <!-- /.sidebar-menu -->
+                    </div>
+                    <!-- /.sidebar -->
+                </aside>
+
+                <div class="modal fade" id="modalChangePassword" aria-modal="true" role="dialog"
+                    style="padding-right: 17px; display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Change Password</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <form id="formChangePassword" action="/changePassword" method="POST">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="oldPassword">Old Password</label>
+                                        <input type="password" class="form-control" id="oldPassword" name="oldPassword"
+                                            placeholder="Enter Old Password" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="newPassword">New Password</label>
+                                        <input type="password" class="form-control" id="newPassword"
+                                            oninput="checkPassword()" name="newPassword"
+                                            placeholder="Enter New Password" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="reEnterPassword">Re-enter New Password</label>
+                                        <input type="password" class="form-control" id="reEnterPassword"
+                                            oninput="checkPassword()" name="reEnterPassword"
+                                            placeholder="Re-enter New Password" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="reset" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>

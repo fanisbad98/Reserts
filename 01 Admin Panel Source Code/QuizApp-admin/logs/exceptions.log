@@ -1,0 +1,16 @@
+ [LOGGER]  2024-Apr-24 10:04:44  error : unhandledRejection: Error creating index: Invalid message size: 1347703880, max allowed: 67108864
+Error: Error creating index: Invalid message size: 1347703880, max allowed: 67108864
+    at C:\Users\pc\Desktop\codecanyon2\01 Admin Panel Source Code\QuizApp-admin\node_modules\connect-mongodb-session\index.js:105:23
+    at C:\Users\pc\Desktop\codecanyon2\01 Admin Panel Source Code\QuizApp-admin\node_modules\mongodb\lib\utils.js:348:66
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) Error: Error creating index: Invalid message size: 1347703880, max allowed: 67108864
+    at C:\Users\pc\Desktop\codecanyon2\01 Admin Panel Source Code\QuizApp-admin\node_modules\connect-mongodb-session\index.js:105:23
+    at C:\Users\pc\Desktop\codecanyon2\01 Admin Panel Source Code\QuizApp-admin\node_modules\mongodb\lib\utils.js:348:66
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+ [LOGGER]  2024-Apr-24 12:04:35  error : unhandledRejection: Error creating index: Invalid message size: 1347703880, max allowed: 67108864
+Error: Error creating index: Invalid message size: 1347703880, max allowed: 67108864
+    at C:\Users\pc\Desktop\codecanyon2\01 Admin Panel Source Code\QuizApp-admin\node_modules\connect-mongodb-session\index.js:105:23
+    at C:\Users\pc\Desktop\codecanyon2\01 Admin Panel Source Code\QuizApp-admin\node_modules\mongodb\lib\utils.js:348:66
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) Error: Error creating index: Invalid message size: 1347703880, max allowed: 67108864
+    at C:\Users\pc\Desktop\codecanyon2\01 Admin Panel Source Code\QuizApp-admin\node_modules\connect-mongodb-session\index.js:105:23
+    at C:\Users\pc\Desktop\codecanyon2\01 Admin Panel Source Code\QuizApp-admin\node_modules\mongodb\lib\utils.js:348:66
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
